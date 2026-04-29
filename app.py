@@ -9,8 +9,7 @@ import gdown
 # 1. Download and Load the real AI brain from Google Drive
 @st.cache_resource
 def load_my_model():
-    # Replace the ID below with the ID from your Google Drive link
-    file_id = 'YOUR_GOOGLE_DRIVE_FILE_ID_HERE'
+    file_id = '1VUUjbFO_V7ErTwgkIR_lNEqMfeG9_n7H'
     url = f'https://drive.google.com/uc?id={file_id}'
     output = 'leafguard_model.h5'
     
@@ -33,7 +32,7 @@ st.write("Upload a leaf photo for instant diagnosis.")
 uploaded_file = st.file_uploader("Choose a leaf image...", type=["jpg", "png", "jpeg"])
 
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
+    image = Image.open(uploaded_file).convert("RGB")
     st.image(image, caption='Uploaded Image', use_container_width=True)
     
     img = image.resize((128, 128))
@@ -46,5 +45,6 @@ if uploaded_file is not None:
     
     st.subheader(f"Diagnosis: {outcome.replace('_', ' ')}")
     
+    # Simple logic to find treatment info
     simple_key = "Potato_late_blight" if "Potato" in outcome else "Tomato_late_blight"
     st.info(f"**Recommended Action:** {treatments.get(simple_key, 'Consult a local expert for specific chemical ratios.')}")

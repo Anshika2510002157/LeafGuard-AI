@@ -1,19 +1,12 @@
 import streamlit as st
-from google import genai
+import google.generativeai as genai
 import json
 
-# Streamlit securely loads the API key from its secrets manager
+# Securely load the API key from Streamlit secrets
 api_key = st.secrets["GEMINI_API_KEY"]
+genai.configure(api_key=api_key)
 
-# Initialize the new GenAI client
-client = genai.Client(api_key=api_key)
+# Use the 1.5 Flash model
+model = genai.GenerativeModel('gemini-1.5-flash') 
 
-# ... your LeafGuard-AI UI code goes here ...
-
-# Note: When you actually generate a response later in your code, 
-# the new syntax for the 3.0 model looks like this:
-#
-# response = client.models.generate_content(
-#     model='gemini-3.0-flash',
-#     contents='Your prompt or leaf image data here'
-# )
+# ... the rest of your LeafGuard-AI UI code ...

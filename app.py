@@ -1,12 +1,19 @@
 import streamlit as st
-import google.generativeai as genai
-import json # for your treatments.json
+from google import genai
+import json
 
 # Streamlit securely loads the API key from its secrets manager
 api_key = st.secrets["GEMINI_API_KEY"]
-genai.configure(api_key=api_key)
 
-# Update the model name to the latest 1.5 version to fix the limit issue
-model = genai.GenerativeModel('gemini-1.5-flash') 
+# Initialize the new GenAI client
+client = genai.Client(api_key=api_key)
 
-# ... the rest of your LeafGuard-AI code remains the same ...
+# ... your LeafGuard-AI UI code goes here ...
+
+# Note: When you actually generate a response later in your code, 
+# the new syntax for the 3.0 model looks like this:
+#
+# response = client.models.generate_content(
+#     model='gemini-3.0-flash',
+#     contents='Your prompt or leaf image data here'
+# )
